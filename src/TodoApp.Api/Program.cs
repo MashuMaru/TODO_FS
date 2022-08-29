@@ -1,41 +1,41 @@
-using System.Data;
-using Microsoft.Data.SqlClient;
+using TodoApp.Api;
 using TodoApp.Data.Interfaces;
 using TodoApp.Data.Repositories;
 using TodoApp.Handlers;
 using TodoApp.Interfaces;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddTransient<ITodoHandler, TodoHandler>();
-builder.Services.AddTransient<ITodoRepository, TodoRepository>();
-
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IDbConnection>(db => new SqlConnection
-    (
-
-        builder.Configuration.GetConnectionString("DB:ConnectionString")
-    )
-);
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+internal class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+  private static void Main(string[] args)
+  {
+    var builder = WebApplication.CreateBuilder(args);
+    var services = builder.Services;
+
+    // Add services to the container.
+    services.AddSingleton<DbContext>();
+    services.AddControllers();
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    services.AddEndpointsApiExplorer();
+    services.AddScoped<ITodoHandler, TodoHandler>();
+    services.AddScoped<ITodoRepository, TodoRepository>();
+
+    services.AddSwaggerGen();
+    
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+      app.UseSwagger();
+      app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+  }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

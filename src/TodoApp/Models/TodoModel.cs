@@ -1,6 +1,6 @@
-namespace TodoApp.Data.Data
+namespace TodoApp.Models
 {
-    public class TodoItemDataModel
+    public class TodoModel
     {
         public int Id { get; set; }
         public string Todo { get; set; }

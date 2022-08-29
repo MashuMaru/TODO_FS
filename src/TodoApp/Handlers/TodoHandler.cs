@@ -13,18 +13,18 @@ namespace TodoApp.Handlers
     }
     private readonly ITodoRepository _repository;
 
-    public ResponseModel CreateTodo()
+    public async Task<ServiceResponse> CreateTodoItem(TodoModel model)
     {
-        var newItem = new TodoItemDataModel
+        var newItem = new TodoDataModel()
         {
           Id = 1,
-          Todo = "Make the connection to the repository.",
+          Todo = model.Todo,
           Created = DateTime.UtcNow
         };
 
-        _repository.CreateTodoItem(newItem);
+        await _repository.CreateTodoItem(newItem).ConfigureAwait(false);
 
-        var response = new ResponseModel
+        var response = new ServiceResponse
         {
           IsSuccessful = true,
           Message = "Successfully linked"

@@ -1,20 +1,29 @@
-using System.Data;
 using TodoApp.Data.Data;
 using TodoApp.Data.Interfaces;
+using TodoApp.Api;
+using Dapper;
 
 namespace TodoApp.Data.Repositories
 {
   public class TodoRepository : ITodoRepository
   {
-    public TodoRepository(IDbConnection db)
+    public TodoRepository(DbContext db)
     {
-        _db = db;
+      _db = db;
     }
-    private readonly IDbConnection _db;
-    public string CreateTodoItem(TodoItemDataModel model)
+    public async Task CreateTodoItem(TodoDataModel model)
     {
-      var aString = model.ToString();
-      return aString;
+      using (var connection = _db.CreateConnection())
+      {
+        await connection.ExecuteAsync(@"
+          INSERT INTO TodoItems
+            (Id, Todo, Created) 
+              VALUES
+            (@Id, @Todo, @Created)",
+            model).ConfigureAwait(false);
+      }
     }
+
+    private readonly DbContext _db;
   }
 }

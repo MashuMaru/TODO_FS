@@ -4,7 +4,7 @@ namespace TodoApp.Interfaces
 {
     public interface ITodoHandler
     {
-        ResponseModel CreateTodo();
+        Task<ServiceResponse> CreateTodoItem(TodoModel model);
         //  Task CreateUser(UserModel model);
     }
 }
