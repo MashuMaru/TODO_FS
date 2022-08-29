@@ -24,6 +24,16 @@ namespace TodoApp.Data.Repositories
       }
     }
 
+    public async Task<int> GetNumberOfTodoItems()
+    {
+      using (var connection = _db.CreateConnection())
+      {
+        return await connection.QueryFirstOrDefaultAsync<int>(@"
+          SELECT Id FROM TodoItems 
+          WHERE Id = (SELECT MAX(Id) FROM TodoItems)").ConfigureAwait(false);
+      }
+    }
+
     private readonly DbContext _db;
   }
 }

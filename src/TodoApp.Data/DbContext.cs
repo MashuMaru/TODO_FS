@@ -9,7 +9,7 @@ namespace TodoApp.Api
         public DbContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("DbConnectionString");
+            _connectionString = _configuration["DbConnectionString"];
         }
 
         public IDbConnection CreateConnection()

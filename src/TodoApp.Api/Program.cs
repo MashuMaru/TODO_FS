@@ -1,3 +1,4 @@
+using System.Reflection;
 using TodoApp.Api;
 using TodoApp.Data.Interfaces;
 using TodoApp.Data.Repositories;
@@ -20,6 +21,7 @@ internal class Program
     services.AddScoped<ITodoRepository, TodoRepository>();
 
     services.AddSwaggerGen();
+    builder.Configuration.AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly(), true);
     
     var app = builder.Build();
 
