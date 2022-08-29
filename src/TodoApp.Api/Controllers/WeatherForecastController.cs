@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Interfaces;
+using TodoApp.Models;
 
 namespace TodoApp.Api.Controllers;
 
@@ -12,21 +14,22 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ITodoHandler _handler;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, ITodoHandler handler)
     {
         _logger = logger;
+        _handler = handler;
     }
 
     [HttpGet("current")]
-    public IEnumerable<WeatherForecast> Get()
+    public IActionResult Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        var result = _handler.CreateTodo();
+        if (!result.IsSuccessful)
         {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+            return BadRequest();
+        }
+        return Ok(result.Message);
     }
 }
