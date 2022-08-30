@@ -15,23 +15,31 @@ namespace TodoApp.Handlers
 
     public async Task<ServiceResponse> CreateTodoItem(TodoModel model)
     {
-      var uniqueId = await _repository.GetHighestId().ConfigureAwait(false) + 1;
-      var newItem = new TodoDataModel()
+      try
       {
-        Id = uniqueId,
-        Todo = model.Todo,
-        Created = DateTime.UtcNow
-      };
+        var uniqueId = await _repository.GetHighestId().ConfigureAwait(false) + 1;
+        var newItem = new TodoDataModel()
+        {
+          Id = uniqueId,
+          Todo = model.Todo,
+          Created = DateTime.UtcNow
+        };
 
-      await _repository.CreateTodoItem(newItem).ConfigureAwait(false);
-
-      var response = new ServiceResponse
+        await _repository.CreateTodoItem(newItem).ConfigureAwait(false);
+        return new ServiceResponse
+        {
+          IsSuccessful = true,
+          Message = "Successfully created todo item."
+        };
+      }
+      catch (Exception e)
       {
-        IsSuccessful = true,
-        Message = "Successfully created todo item."
-      };
-
-      return response;
+        return new ServiceResponse
+        {
+          IsSuccessful = false,
+          Message = e.StackTrace!
+        };
+      }
     }
   }
 }
