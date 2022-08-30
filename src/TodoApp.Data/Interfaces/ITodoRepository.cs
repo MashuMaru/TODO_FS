@@ -6,6 +6,6 @@ namespace TodoApp.Data.Interfaces
     public interface ITodoRepository
     {
         Task CreateTodoItem(TodoDataModel model);
-        Task<int> GetNumberOfTodoItems();
+        Task<int> GetHighestId();
     }
 }

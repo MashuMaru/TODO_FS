@@ -24,7 +24,7 @@ namespace TodoApp.Data.Repositories
       }
     }
 
-    public async Task<int> GetNumberOfTodoItems()
+    public async Task<int> GetHighestId()
     {
       using (var connection = _db.CreateConnection())
       {
