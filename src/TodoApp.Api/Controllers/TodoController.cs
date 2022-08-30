@@ -17,12 +17,23 @@ public class TodoController : ControllerBase
     [HttpPost("create")]
     public async Task<IActionResult> CreateTodoItem(TodoModel model)
     {
-        var result = await _handler.CreateTodoItem(model);
-        if (!result.IsSuccessful)
+        var response = await _handler.CreateTodoItem(model);
+        if (!response.IsSuccessful)
         {
-            return BadRequest();
+            return BadRequest(response.Message);
         }
-        return Ok(result.Message);
+        return Ok(response.Message);
+    }
+
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteTodoRow(int id)
+    {
+        var response = await _handler.DeleteTodoRow(id).ConfigureAwait(false);
+        if (!response.IsSuccessful)
+        {
+            return BadRequest(response.Message);
+        }
+        return Ok(response.Message);
     }
 
     private readonly ILogger<TodoController> _logger;

@@ -34,6 +34,16 @@ namespace TodoApp.Data.Repositories
       }
     }
 
+    public async Task DeleteTodoRow(int id)
+    {
+      using (var connection = _db.CreateConnection())
+      {
+        await connection.ExecuteAsync(@"
+        DELETE FROM TodoItems 
+        WHERE Id = @id", new { id }).ConfigureAwait(false);
+      }
+    }
+
     private readonly DbContext _db;
   }
 }

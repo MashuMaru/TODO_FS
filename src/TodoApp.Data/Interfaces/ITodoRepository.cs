@@ -7,5 +7,6 @@ namespace TodoApp.Data.Interfaces
     {
         Task CreateTodoItem(TodoDataModel model);
         Task<int> GetHighestId();
+        Task DeleteTodoRow(int id);
     }
 }

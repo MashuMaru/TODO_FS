@@ -11,7 +11,6 @@ namespace TodoApp.Handlers
     {
       _repository = repository;
     }
-    private readonly ITodoRepository _repository;
 
     public async Task<ServiceResponse> CreateTodoItem(TodoModel model)
     {
@@ -41,5 +40,28 @@ namespace TodoApp.Handlers
         };
       }
     }
+
+    public async Task<ServiceResponse> DeleteTodoRow(int id)
+    {
+      try
+      {
+        await _repository.DeleteTodoRow(id).ConfigureAwait(false);
+        return new ServiceResponse
+        {
+          IsSuccessful = true,
+          Message = $"Successfully deleted row {id} (id) from todo list."
+        };
+      }
+      catch (Exception e)
+      {
+        return new ServiceResponse
+        {
+          IsSuccessful = false,
+          Message = e.StackTrace!
+        };
+      }
+    }
+
+    private readonly ITodoRepository _repository;
   }
 }
