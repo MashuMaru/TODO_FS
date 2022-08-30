@@ -1,7 +1,7 @@
-using TodoApp.Data.Data;
 using TodoApp.Data.Interfaces;
 using TodoApp.Api;
 using Dapper;
+using TodoApp.Data.Models;
 
 namespace TodoApp.Data.Repositories
 {
@@ -39,8 +39,17 @@ namespace TodoApp.Data.Repositories
       using (var connection = _db.CreateConnection())
       {
         await connection.ExecuteAsync(@"
-        DELETE FROM TodoItems 
-        WHERE Id = @id", new { id }).ConfigureAwait(false);
+          DELETE FROM TodoItems 
+          WHERE Id = @id", new { id }).ConfigureAwait(false);
+      }
+    }
+
+    public async Task<IEnumerable<TodoDataModel>> GetAllTodoItems()
+    {
+      using (var connection = _db.CreateConnection())
+      {
+        return await connection.QueryAsync<TodoDataModel>(@"
+          SELECT Id, Todo, Created FROM TodoItems").ConfigureAwait(false);
       }
     }
 

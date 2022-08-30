@@ -1,5 +1,5 @@
-using TodoApp.Data.Data;
 using TodoApp.Data.Interfaces;
+using TodoApp.Data.Models;
 using TodoApp.Interfaces;
 using TodoApp.Models;
 
@@ -60,6 +60,23 @@ namespace TodoApp.Handlers
           Message = e.StackTrace!
         };
       }
+    }
+
+    public async Task<IEnumerable<TodoModel>> GetAllTodoItems()
+    {
+      var items = await _repository.GetAllTodoItems().ConfigureAwait(false);
+      var mappedItems = new List<TodoModel>();
+      foreach (var item in items)
+      {
+        var mappedItem = new TodoModel
+        {
+          Id = item.Id,
+          Todo = item.Todo,
+          Created = item.Created
+        };
+        mappedItems.Add(mappedItem);
+      }
+      return mappedItems; 
     }
 
     private readonly ITodoRepository _repository;

@@ -1,5 +1,4 @@
-using System.Data;
-using TodoApp.Data.Data;
+using TodoApp.Data.Models;
 
 namespace TodoApp.Data.Interfaces
 {
@@ -8,5 +7,6 @@ namespace TodoApp.Data.Interfaces
         Task CreateTodoItem(TodoDataModel model);
         Task<int> GetHighestId();
         Task DeleteTodoRow(int id);
+        Task<IEnumerable<TodoDataModel>> GetAllTodoItems();
     }
 }

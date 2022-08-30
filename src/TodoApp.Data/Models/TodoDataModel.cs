@@ -1,4 +1,4 @@
-namespace TodoApp.Data.Data
+namespace TodoApp.Data.Models
 {
     public class TodoDataModel
     {

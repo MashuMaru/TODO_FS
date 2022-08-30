@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Data.Models;
 using TodoApp.Interfaces;
 using TodoApp.Models;
 
@@ -34,6 +35,13 @@ public class TodoController : ControllerBase
             return BadRequest(response.Message);
         }
         return Ok(response.Message);
+    }
+
+    [HttpGet("all-items")]
+    public async Task<IEnumerable<TodoModel>> GetAllTodoItems()
+    {
+        var items = await _handler.GetAllTodoItems().ConfigureAwait(false);
+        return items;
     }
 
     private readonly ILogger<TodoController> _logger;
