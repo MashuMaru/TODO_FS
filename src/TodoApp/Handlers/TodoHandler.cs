@@ -15,13 +15,7 @@ namespace TodoApp.Handlers
 
     public async Task<ServiceResponse> CreateTodoItem(TodoModel model)
     {
-      var highestId = await _repository.GetHighestId().ConfigureAwait(false);
-
-      var uniqueId = 0;
-      if (highestId <= 0)
-      {
-        uniqueId = highestId + 1;
-      }
+      var uniqueId = await _repository.GetHighestId().ConfigureAwait(false) + 1;
       var newItem = new TodoDataModel()
       {
         Id = uniqueId,
