@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using TodoApp.Data.Models;
 using TodoApp.Interfaces;
 using TodoApp.Models;
 
