@@ -30,7 +30,7 @@ namespace TodoApp.Data.Repositories
       {
         return await connection.QueryFirstOrDefaultAsync<int>(@"
           SELECT Id FROM TodoItems 
-          WHERE Id = (SELECT MAX(Id) FROM TodoItems)").ConfigureAwait(false);
+          WHERE Id = (SELECT MAX(ID) FROM TodoItems)").ConfigureAwait(false);
       }
     }
 
