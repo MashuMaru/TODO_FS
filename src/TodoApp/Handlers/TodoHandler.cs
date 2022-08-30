@@ -65,6 +65,7 @@ namespace TodoApp.Handlers
     public async Task<IEnumerable<TodoModel>> GetAllTodoItems()
     {
       var items = await _repository.GetAllTodoItems().ConfigureAwait(false);
+      // TODO: Implement autoMapping.
       var mappedItems = new List<TodoModel>();
       foreach (var item in items)
       {
