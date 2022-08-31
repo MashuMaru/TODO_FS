@@ -17,9 +17,9 @@ namespace TodoApp.Data.Repositories
       {
         await connection.ExecuteAsync(@"
           INSERT INTO TodoItems
-            (Id, Todo, Created) 
+            (Id, Todo, Created, IsComplete) 
               VALUES
-            (@Id, @Todo, @Created)",
+            (@Id, @Todo, @Created, @IsComplete)",
             model).ConfigureAwait(false);
       }
     }
@@ -49,7 +49,7 @@ namespace TodoApp.Data.Repositories
       using (var connection = _db.CreateConnection())
       {
         return await connection.QueryAsync<TodoDataModel>(@"
-          SELECT Id, Todo, Created FROM TodoItems").ConfigureAwait(false);
+          SELECT Id, Todo, Created, IsComplete FROM TodoItems").ConfigureAwait(false);
       }
     }
 

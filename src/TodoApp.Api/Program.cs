@@ -10,6 +10,18 @@ internal class Program
   private static void Main(string[] args)
   {
     var builder = WebApplication.CreateBuilder(args);
+    var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+    builder.Services.AddCors(options =>
+    {
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+      policy  =>
+      {
+        policy.WithOrigins("http://localhost:3000")
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+      });
+    });
+
     var services = builder.Services;
 
     // Add services to the container.
@@ -21,8 +33,13 @@ internal class Program
     services.AddScoped<ITodoRepository, TodoRepository>();
 
     services.AddSwaggerGen();
-    builder.Configuration.AddEnvironmentVariables().AddUserSecrets(Assembly.GetExecutingAssembly(), true);
-    
+    builder.Configuration
+      .AddEnvironmentVariables()
+      .AddUserSecrets
+      (
+        Assembly.GetExecutingAssembly(), true
+      );
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -31,12 +48,10 @@ internal class Program
       app.UseSwagger();
       app.UseSwaggerUI();
     }
-
     app.UseHttpsRedirection();
-
     app.UseAuthorization();
-
     app.MapControllers();
+    app.UseCors(MyAllowSpecificOrigins);
 
     app.Run();
   }

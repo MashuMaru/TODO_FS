@@ -21,7 +21,8 @@ namespace TodoApp.Handlers
         {
           Id = uniqueId,
           Todo = model.Todo,
-          Created = DateTime.UtcNow
+          Created = DateTime.UtcNow,
+          IsComplete = false
         };
 
         await _repository.CreateTodoItem(newItem).ConfigureAwait(false);
@@ -73,7 +74,8 @@ namespace TodoApp.Handlers
         {
           Id = item.Id,
           Todo = item.Todo,
-          Created = item.Created
+          Created = item.Created,
+          IsComplete = item.IsComplete
         };
         mappedItems.Add(mappedItem);
       }
