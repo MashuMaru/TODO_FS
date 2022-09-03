@@ -23,7 +23,7 @@ public class TodoController : ControllerBase
             return BadRequest(response.Message);
         }
         _logger.LogInformation("Creating todo item."); 
-        return Ok(response.Message);
+        return Content(response.Message);
     }
 
     [HttpDelete("delete/{id}")]
@@ -35,15 +35,15 @@ public class TodoController : ControllerBase
             return BadRequest(response.Message);
         }
         _logger.LogInformation($"Deleting todo item id: {id}");
-        return Ok(response.Message);
+        return Content(response.Message);
     }
 
     [HttpGet("all-items")]
-    public async Task<IEnumerable<TodoModel>> GetAllTodoItems()
+    public async Task<ActionResult<IEnumerable<TodoModel>>> GetAllTodoItems()
     {
         var items = await _handler.GetAllTodoItems().ConfigureAwait(false);
         _logger.LogInformation("Getting all available todo items.");
-        return items;
+        return Ok(items);
     }
 
     private readonly ILogger<TodoController> _logger;
