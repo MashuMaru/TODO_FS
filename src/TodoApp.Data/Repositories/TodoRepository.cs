@@ -17,10 +17,10 @@ namespace TodoApp.Data.Repositories
       {
         await connection.ExecuteAsync(@"
           INSERT INTO TodoItems
-            (Id, Todo, Created, IsComplete) 
-              VALUES
-            (@Id, @Todo, @Created, @IsComplete)",
-            model).ConfigureAwait(false);
+          (Id, Todo, Created, IsComplete) 
+          VALUES
+          (@Id, @Todo, @Created, @IsComplete)", model
+        ).ConfigureAwait(false);
       }
     }
 
@@ -30,7 +30,9 @@ namespace TodoApp.Data.Repositories
       {
         return await connection.QueryFirstOrDefaultAsync<int>(@"
           SELECT Id FROM TodoItems 
-          WHERE Id = (SELECT MAX(ID) FROM TodoItems)").ConfigureAwait(false);
+          WHERE 
+          Id = (SELECT MAX(ID) FROM TodoItems)"
+        ).ConfigureAwait(false);
       }
     }
 
@@ -40,7 +42,8 @@ namespace TodoApp.Data.Repositories
       {
         await connection.ExecuteAsync(@"
           DELETE FROM TodoItems 
-          WHERE Id = @id", new { id }).ConfigureAwait(false);
+          WHERE Id = @id", new { id }
+        ).ConfigureAwait(false);
       }
     }
 
@@ -49,7 +52,21 @@ namespace TodoApp.Data.Repositories
       using (var connection = _db.CreateConnection())
       {
         return await connection.QueryAsync<TodoDataModel>(@"
-          SELECT Id, Todo, Created, IsComplete FROM TodoItems").ConfigureAwait(false);
+          SELECT Id, Todo, Created, IsComplete 
+          FROM TodoItems"
+        ).ConfigureAwait(false);
+      }
+    }
+
+    public async Task SetTodoItemAsComplete(int id)
+    {
+      using (var connection = _db.CreateConnection())
+      {
+        await connection.ExecuteAsync(@"
+          UPDATE TodoItems
+          SET IsComplete = 1
+          WHERE Id = @id", new { id }
+        ).ConfigureAwait(false);
       }
     }
 

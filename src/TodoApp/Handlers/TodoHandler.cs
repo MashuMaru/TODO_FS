@@ -82,6 +82,27 @@ namespace TodoApp.Handlers
       return mappedItems; 
     }
 
+    public async Task<ServiceResponse> SetTodoItemAsComplete(int id)
+    {
+      try
+      {
+        await _repository.SetTodoItemAsComplete(id).ConfigureAwait(false);
+        return new ServiceResponse
+        {
+          IsSuccessful = true,
+          Message = $"Successfully set todo item {id} (id) to complete."
+        };
+      }
+      catch (Exception e)
+      {
+        return new ServiceResponse
+        {
+          IsSuccessful = false,
+          Message = e.StackTrace!
+        };
+      }
+    }
+
     private readonly ITodoRepository _repository;
   }
 }

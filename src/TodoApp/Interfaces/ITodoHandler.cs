@@ -7,5 +7,6 @@ namespace TodoApp.Interfaces
         Task<ServiceResponse> CreateTodoItem(TodoModel model);
         Task<ServiceResponse> DeleteTodoRow(int id);
         Task<IEnumerable<TodoModel>> GetAllTodoItems();
+        Task<ServiceResponse> SetTodoItemAsComplete(int id);
     }
 }

@@ -8,5 +8,6 @@ namespace TodoApp.Data.Interfaces
         Task<int> GetHighestId();
         Task DeleteTodoRow(int id);
         Task<IEnumerable<TodoDataModel>> GetAllTodoItems();
+        Task SetTodoItemAsComplete(int id);
     }
 }

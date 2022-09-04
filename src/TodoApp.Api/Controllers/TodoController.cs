@@ -46,6 +46,18 @@ public class TodoController : ControllerBase
         return Ok(items);
     }
 
+    [HttpPatch("complete/{id}")]
+    public async Task<IActionResult> SetTodoItemAsComplete(int id)
+    {
+        var response = await _handler.SetTodoItemAsComplete(id).ConfigureAwait(false);
+        if (!response.IsSuccessful)
+        {
+            return BadRequest(response.Message);
+        }
+        _logger.LogInformation($"Setting todo item {id} as complete.");
+        return Content(response.Message);
+    }
+
     private readonly ILogger<TodoController> _logger;
     private readonly ITodoHandler _handler;
 }
