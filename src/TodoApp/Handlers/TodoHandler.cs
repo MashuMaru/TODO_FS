@@ -50,7 +50,7 @@ namespace TodoApp.Handlers
         return new ServiceResponse
         {
           IsSuccessful = true,
-          Message = $"Successfully deleted row {id} (id) from todo list."
+          Message = $"Successfully deleted {id} (id) from todo list."
         };
       }
       catch (Exception e)
