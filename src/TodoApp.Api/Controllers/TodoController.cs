@@ -22,7 +22,7 @@ public class TodoController : ControllerBase
         {
             return BadRequest(response.Message);
         }
-        _logger.LogInformation("Creating todo item."); 
+        _logger.LogInformation("Creating todo item"); 
         return Content(response.Message);
     }
 
@@ -34,7 +34,7 @@ public class TodoController : ControllerBase
         {
             return BadRequest(response.Message);
         }
-        _logger.LogInformation($"Deleting todo item id: {id}");
+        _logger.LogInformation($"Deleting todo item");
         return Content(response.Message);
     }
 
@@ -42,7 +42,7 @@ public class TodoController : ControllerBase
     public async Task<ActionResult<IEnumerable<TodoModel>>> GetAllTodoItems()
     {
         var items = await _handler.GetAllTodoItems().ConfigureAwait(false);
-        _logger.LogInformation("Getting all available todo items.");
+        _logger.LogInformation("Getting all available todo items");
         return Ok(items);
     }
 
@@ -54,7 +54,7 @@ public class TodoController : ControllerBase
         {
             return BadRequest(response.Message);
         }
-        _logger.LogInformation($"Setting todo item {id} as complete.");
+        _logger.LogInformation($"Setting todo item as complete");
         return Content(response.Message);
     }
 

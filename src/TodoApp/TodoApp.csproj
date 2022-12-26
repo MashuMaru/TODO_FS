@@ -4,15 +4,16 @@
     <ProjectReference Include="..\TodoApp.Data\TodoApp.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <_EnableMacOSCodeSign>false</_EnableMacOSCodeSign>
+    <UserSecretsId>8d6b3cc2-775c-4c5b-9398-d9819459d4bb</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.123" />
-  </ItemGroup>
 
 </Project>
